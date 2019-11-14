@@ -1,19 +1,16 @@
-import React, {useState, useEffect} from 'react';
-import {connect} from 'react-redux';
-import {fetchGifData} from '../reducers/gifReducer';
+import React, {Fragment, useEffect} from 'react';
+import GifGridList from './GifGridList';
+import SearchAppBar from './SearchAppBar';
 
-const App = ({fetchGifData, gifData}) => {
-  
-  useEffect(()=> {
-    (()=> {
-      fetchGifData('anchorman');
-    })();
-  }, [])
+const App = () => {
+
   return (
-    <div>{gifData.map(gif => <img key={gif.id} src={gif.images.fixed_width.url} alt={gif.title} />)}</div>
+    <Fragment>
+    <SearchAppBar />
+    <GifGridList />
+    </Fragment>
   );
 }
 
-const mapStateToProps = ({status, gifData}) => ({status, gifData});
 
-export default connect(mapStateToProps, {fetchGifData})(App);
+export default App;

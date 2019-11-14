@@ -19,6 +19,7 @@ const gifSearchFail = () => ({
   type: GIF_SEARCH_FAIL,
 });
 
+//Reducer
 const initialState = {status: 'initial', gifData: []};
 
 export const gifReducer = (state = initialState, action) => {
