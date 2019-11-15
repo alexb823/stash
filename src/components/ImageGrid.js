@@ -5,7 +5,7 @@ import ImageCard from './ImageCard';
 const useStyles = makeStyles(theme => ({
   container: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
     gridGap: '0 6px',
     gridAutoRows: '4px',
   },

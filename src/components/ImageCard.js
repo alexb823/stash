@@ -19,12 +19,12 @@ const ImageCard = (props) => {
     setSpans(spans);
   }
   
-  useEffect( () => {
-    imgRef.current.addEventListener('load', calcAndSetSpans);
-    return () => {
-       imgRef.current.removeEventListener('load', calcAndSetSpans);
-    }
-  }, [])
+  // useEffect( () => {
+  //   imgRef.current.addEventListener('load', calcAndSetSpans);
+  //   return () => {
+  //     imgRef.current.removeEventListener('load', calcAndSetSpans);
+  //   }
+  // }, [])
   
   useEffect(() => {
     window.addEventListener('resize', calcAndSetSpans);
@@ -32,13 +32,15 @@ const ImageCard = (props) => {
       window.removeEventListener('resize', calcAndSetSpans)
     }
   })
-  // fixed_width_downsampled
+ 
   return (
     <div style={{gridRowEnd: `span ${spans}`}}>
       <img
-        ref={imgRef} className={classes.image}
-        src={props.gif.images.downsized_large.url}
+        ref={imgRef}
+        className={classes.image}
+        src={props.gif.images.fixed_width.url}
         alt={props.gif.title}
+        onLoad={calcAndSetSpans}
       />
     </div>
     )
