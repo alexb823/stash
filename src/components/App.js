@@ -1,16 +1,16 @@
-import React, {Fragment, useEffect} from 'react';
+import React from 'react';
+import GifGrid from './GifGrid';
 import GifGridList from './GifGridList';
 import SearchAppBar from './SearchAppBar';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 const App = () => {
-
   return (
-    <Fragment>
-    <SearchAppBar />
-    <GifGridList />
-    </Fragment>
+    <Router>
+      <Route component={SearchAppBar} />
+      <Route exact path="/search/:query" component={GifGrid} />
+    </Router>
   );
-}
-
+};
 
 export default App;
