@@ -8,18 +8,12 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     padding: theme.spacing(2),
-    // height: 'calc(100vh - 64px)',
-  },
-  paper: {
-    padding: theme.spacing(0),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
   },
   gridItem: {
-    // height: '10px',
+    width: '300px',
   },
   image: {
-    marginBottom: theme.spacing(1),
+    width: '100%',
   },
 }));
 
@@ -28,14 +22,14 @@ const GifGrid = ({ gifData }) => {
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={1} justify="center" alignItems="flex-start">
+      <Grid container  direction="column" spacing={1} justify="flex-start" alignItems="center">
         {gifData.map(gif => (
           <Grid
-            className={classes.gridItem}
             item
+            className={classes.gridItem}
             key={gif.id}
           >
-            <img src={gif.images.downsized_large.url} alt={gif.title} />
+            <img className={classes.image} src={gif.images.downsized_large.url} alt={gif.title} />
           </Grid>
         ))}
       </Grid>

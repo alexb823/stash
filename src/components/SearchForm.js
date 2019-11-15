@@ -74,7 +74,7 @@ const SearchForm = ({ match, location, history, fetchGifData }) => {
         <SearchIcon />
       </div>
       <InputBase
-        placeholder="Search GIFs"
+        placeholder="Search All GIFs"
         classes={{
           root: classes.inputRoot,
           input: classes.inputInput,
