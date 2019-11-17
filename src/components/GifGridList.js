@@ -6,6 +6,8 @@ import {fetchGifData} from '../reducers/gifReducer';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 
+import uuid from 'uuid/v4';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -18,7 +20,10 @@ const useStyles = makeStyles(theme => ({
   gridList: {
     width: '100vw',
     height: '100vh',
-    padding: '0 10%'
+    overflowY: 'scroll',
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
   },
 }));
 
@@ -26,14 +31,14 @@ const GifGridList = ({fetchGifData, gifData}) => {
   useEffect(() => {
       fetchGifData('anchorman');
   }, []);
-  
+
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <GridList cellHeight={200} className={classes.gridList} cols={5}>
         {gifData.map(gif => (
-          <GridListTile key={gif.id} cols={1}>
+          <GridListTile key={uuid()} cols={1}>
             <img src={gif.images.fixed_width.url} alt={gif.title} />
           </GridListTile>
         ))}

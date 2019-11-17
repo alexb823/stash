@@ -2,39 +2,58 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
-import InfiniteScroll from 'react-infinite-scroll-component';
+// import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from 'react-infinite-scroller';
 import ImageGrid from './ImageGrid';
 import { fetchMoreGifData } from '../reducers/gifReducer';
+import GifGridList from './GifGridList';
+import GifGrid from './GifGrid';
 
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(4),
-    overflow: 'hidden',
-    overflowY: 'scroll',
-    '&::-webkit-scrollbar': {
-      display: 'none',
-    },
+    // overflowY: 'scroll',
+    // '&::-webkit-scrollbar': {
+    //   display: 'none',
+    // },
+  },
+  grid: {
+
   },
 }));
 
 const SearchResults = ({ match, status, gifData, fetchMoreGifData }) => {
   const classes = useStyles();
-  console.log(match);
 
   const handleNext = () => {
     fetchMoreGifData(match.params.query, gifData.length);
   };
 
   return (
-    <InfiniteScroll
-      className={classes.root}
-      dataLength={gifData.length}
-      next={handleNext}
-      hasMore={gifData.length < 400}
-    >
-      {status === 'fetching' ? (<div>loading...</div>) :
-    (<ImageGrid gifData={gifData} />)}
-    </InfiniteScroll>
+    // <InfiniteScroll
+    //   className={classes.root}
+    //   dataLength={gifData.length}
+    //   next={handleNext}
+    //   hasMore={gifData.length < 400}
+    // >
+    <div className={classes.root}>
+      <InfiniteScroll
+        pageStart={0}
+        loadMore={handleNext}
+        hasMore={gifData.length < 400}
+        loader={
+          <div className="loader" key={0}>
+            Loading ...
+          </div>
+        }
+      >
+        {status === 'fetching' ? (
+          <div>loading...</div>
+        ) : (
+          <GifGrid gifData={gifData} className={classes.grid} />
+        )}
+      </InfiniteScroll>
+    </div>
   );
 };
 

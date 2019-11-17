@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import GridListTile from '@material-ui/core/GridListTile';
 
 const boxColors = [
   '#6342a5',
@@ -12,17 +13,14 @@ const boxColors = [
 
 const useStyles = makeStyles(theme => ({
   root: {
-    gridRowEnd: spans => `span ${spans}`,
     backgroundColor: () => boxColors[Math.floor(Math.random() * 6)],
-    marginBottom: '40px',
   },
   image: {
-    width: '100%',
+    // width: '100%',
   },
 }));
 
-const ImageCard = props => {
-  const [spans, setSpans] = useState(10);
+const GifGridTile = props => {
   const imgRef = useRef(null);
 
   const classes = useStyles(spans);
@@ -33,13 +31,6 @@ const ImageCard = props => {
     setSpans(spans);
   };
 
-  // useEffect( () => {
-  //   imgRef.current.addEventListener('load', calcAndSetSpans);
-  //   return () => {
-  //     imgRef.current.removeEventListener('load', calcAndSetSpans);
-  //   }
-  // }, [])
-
   useEffect(() => {
     window.addEventListener('resize', calcAndSetSpans);
     return () => {
@@ -48,7 +39,7 @@ const ImageCard = props => {
   });
 
   return (
-    <div className={classes.root} >
+    <GridListTile className={classes.root} cols={1}>
       <img
         ref={imgRef}
         className={classes.image}
@@ -59,8 +50,8 @@ const ImageCard = props => {
         alt={props.gif.title}
         onLoad={calcAndSetSpans}
       />
-    </div>
+    </GridListTile>
   );
 };
 
-export default ImageCard;
+export default GifGridTile;
