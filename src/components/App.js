@@ -1,6 +1,4 @@
 import React from 'react';
-import GifGrid from './GifGrid';
-import GifGridList from './GifGridList';
 import SearchResults from './SearchResults';
 import SearchAppBar from './SearchAppBar';
 import { BrowserRouter as Router, Route } from 'react-router-dom';

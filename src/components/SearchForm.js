@@ -14,10 +14,10 @@ const useStyles = makeStyles(theme => ({
     '&:hover': {
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
-    marginLeft: 0,
+    marginLeft: '35px',
     width: '100%',
     [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(1),
+      marginLeft: 'auto',
       width: 'auto',
     },
   },
@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const SearchForm = ({ match, location, history, fetchGifData }) => {
+const SearchForm = ({ location, history, fetchGifData }) => {
   const classes = useStyles();
   const [query, setQuery] = useState('');
 
@@ -56,7 +56,7 @@ const SearchForm = ({ match, location, history, fetchGifData }) => {
       setQuery(searchText);
       fetchGifData(searchText);
     }
-  }, []);
+  }, [location]);
 
   const handleChange = ({ target: { value } }) => {
     setQuery(value);
@@ -66,6 +66,7 @@ const SearchForm = ({ match, location, history, fetchGifData }) => {
     event.preventDefault();
     fetchGifData(query);
     history.push(`/search/${query}`);
+    setQuery('');
   };
 
   return (
