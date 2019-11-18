@@ -12,10 +12,6 @@ import GifGrid from './GifGrid';
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(2),
-    // overflowY: 'scroll',
-    // '&::-webkit-scrollbar': {
-    //   display: 'none',
-    // },
   },
   grid: {},
 }));
