@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
   grid: {},
 }));
 
-const SearchResults = ({ match, status, gifData, fetchMoreGifData }) => {
+const SearchResults = ({ match, status, gifData, totalCount, fetchMoreGifData }) => {
   const classes = useStyles();
 
   const handleNext = () => {
@@ -28,7 +28,7 @@ const SearchResults = ({ match, status, gifData, fetchMoreGifData }) => {
       <InfiniteScroll
         pageStart={0}
         loadMore={handleNext}
-        hasMore={gifData.length < 400}
+        hasMore={gifData.length < totalCount}
         loader={
           <div className="loader" key={0}>
             Loading Gifs ...
@@ -45,6 +45,6 @@ const SearchResults = ({ match, status, gifData, fetchMoreGifData }) => {
   );
 };
 
-const mapStateToProps = ({ status, gifData }) => ({ status, gifData });
+const mapStateToProps = ({ status, gifData, totalCount }) => ({ status, gifData, totalCount });
 
 export default connect(mapStateToProps, { fetchMoreGifData })(SearchResults);
