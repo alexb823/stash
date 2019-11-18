@@ -30,6 +30,7 @@ const SearchResults = ({ match, searchData, fetchMoreGifData }) => {
     <div className={classes.root}>
       <InfiniteScroll
         pageStart={0}
+        initialLoad={false}
         loadMore={handleNext}
         hasMore={gifData.length < totalCount}
         loader={
@@ -39,7 +40,7 @@ const SearchResults = ({ match, searchData, fetchMoreGifData }) => {
         }
       >
         {status === 'fetching' ? (
-          <div></div>
+          <div>MY LOADER</div>
         ) : (
           <GifGrid gifData={gifData} />
         )}

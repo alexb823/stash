@@ -8,6 +8,11 @@ export const addedToFavorites = gif => ({
   gif,
 });
 
+export const removedFromFavorites = id => ({
+  type: REMOVED_FROM_FAVORITES,
+  id,
+});
+
 //Reducer
 const initialState = { favoriteGifs: [], favoriteIdHash: {} };
 
@@ -17,6 +22,17 @@ export const favoriteReducer = (state = initialState, action) => {
       return {
         favoriteGifs: [...state.favoriteGifs, action.gif],
         favoriteIdHash: { ...state.favoriteIdHash, [action.gif.id]: true },
+      };
+    case REMOVED_FROM_FAVORITES:
+      return {
+        favoriteGifs: [...state.favoriteGifs].filter(
+          gif => gif.id !== action.id
+        ),
+        favoriteIdHash: (() => {
+          const newIdHash = {...state.favoriteIdHash};
+          delete newIdHash[action.id];
+          return newIdHash
+        })()
       };
     default:
       return state;

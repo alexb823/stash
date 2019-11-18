@@ -16,7 +16,6 @@ const useStyles = makeStyles(theme => ({
     '&:hover': {
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
-    marginLeft: '35px',
     width: '100%',
     [theme.breakpoints.up('sm')]: {
       marginLeft: 'auto',
@@ -40,9 +39,9 @@ const useStyles = makeStyles(theme => ({
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('sm')]: {
-      width: 120,
+      width: 170,
       '&:focus': {
-        width: 200,
+        width: 250,
       },
     },
   },
@@ -51,14 +50,14 @@ const useStyles = makeStyles(theme => ({
 const SearchForm = ({ location, history, fetchGifData }) => {
   const classes = useStyles();
   const [query, setQuery] = useState('');
+  console.log('THE LOCATION!!!!!!', location);
 
   useEffect(() => {
     const searchText = location.pathname.split('/').slice(-1)[0];
-    if (searchText) {
-      setQuery(searchText);
+    if (searchText && location.pathname !== '/favorite') {
       fetchGifData(searchText);
     }
-  }, [location]);
+  }, []);
 
   const handleChange = ({ target: { value } }) => {
     setQuery(value);

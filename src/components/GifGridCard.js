@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-import { addedToFavorites } from '../reducers/favoriteReducer';
+import {
+  addedToFavorites,
+  removedFromFavorites,
+} from '../reducers/favoriteReducer';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -77,10 +80,13 @@ const useStyles = makeStyles(theme => ({
 
 const GifGridCard = ({
   gif,
+  favoriteIdHash,
   setSnackbarOpen,
   setSnackbarMessage,
   addedToFavorites,
+  removedFromFavorites,
 }) => {
+  const isFavorite = favoriteIdHash[gif.id];
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -104,18 +110,21 @@ const GifGridCard = ({
   const handleFavoriteClick = event => {
     event.stopPropagation();
     setSnackbarOpen(true);
-    setSnackbarMessage(`Added ${gif.title} to favorite`);
+    setSnackbarMessage(`Added ${gif.title} to favorites`);
     addedToFavorites(gif);
+  };
+
+  const handleUnfavoriteClick = event => {
+    event.stopPropagation();
+    setSnackbarOpen(true);
+    setSnackbarMessage(`Removed ${gif.title} from favorites`);
+    removedFromFavorites(gif.id);
   };
 
   return (
     <Grid item aria-label={gif.title}>
       <Card className={classes.card} onClick={handleCardClick}>
-        <CardMedia
-          className={classes.media}
-          image={gif.images.fixed_width.url}
-          // title={gif.title}
-        >
+        <CardMedia className={classes.media} image={gif.images.fixed_width.url}>
           <div className={classes.actions}>
             <Tooltip title="Copy Link" placement="top">
               <IconButton
@@ -129,16 +138,30 @@ const GifGridCard = ({
                 </CopyToClipboard>
               </IconButton>
             </Tooltip>
-            <Tooltip title="Favorite" placement="top">
-              <IconButton
-                className={classes.icon}
-                color="secondary"
-                onClick={handleFavoriteClick}
-                aria-label={`Favorite ${gif.title}`}
-              >
-                <FavoriteBorderOutlinedIcon />
-              </IconButton>
-            </Tooltip>
+
+            {isFavorite ? (
+              <Tooltip title="Unfavorite" placement="top">
+                <IconButton
+                  className={classes.icon}
+                  color="secondary"
+                  onClick={handleUnfavoriteClick}
+                  aria-label={`Remove ${gif.title} from favorites`}
+                >
+                  <FavoriteOutlinedIcon />
+                </IconButton>
+              </Tooltip>
+            ) : (
+              <Tooltip title="Favorite" placement="top">
+                <IconButton
+                  className={classes.icon}
+                  color="secondary"
+                  onClick={handleFavoriteClick}
+                  aria-label={`Add ${gif.title} to favorites`}
+                >
+                  <FavoriteBorderOutlinedIcon />
+                </IconButton>
+              </Tooltip>
+            )}
           </div>
         </CardMedia>
       </Card>
@@ -163,4 +186,11 @@ const GifGridCard = ({
   );
 };
 
-export default connect(null, { addedToFavorites })(GifGridCard);
+const mapStateToProps = ({ favoriteData: { favoriteIdHash } }) => ({
+  favoriteIdHash,
+});
+
+export default connect(mapStateToProps, {
+  addedToFavorites,
+  removedFromFavorites,
+})(GifGridCard);

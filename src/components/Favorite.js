@@ -33,7 +33,7 @@ const Favorite = ({ match, favoriteData }) => {
           </div>
         }
       > */}
-        {!favoriteGifs.lenght ? (
+        {!favoriteGifs.length ? (
           <div></div>
         ) : (
           <GifGrid gifData={favoriteGifs} />
