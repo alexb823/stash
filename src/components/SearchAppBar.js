@@ -1,31 +1,52 @@
 import React from 'react';
+
+import SearchForm from './SearchForm';
+
+import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
-import SearchForm from './SearchForm';
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
   },
   toolbar: {
-    paddingLeft: theme.spacing(2),
+    paddingLeft: theme.spacing(0),
     paddingRight: theme.spacing(2),
   },
   logoButton: {
-    height: '32px',
-    width: '140px',
+    height: '48px',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-start',
-    marginRight: theme.spacing(2),
+    justifyContent: 'center',
+    marginRight: theme.spacing(1),
+  },
+  logoIconSm: {
+    position: 'absolute',
+    height: '40px',
   },
   logoIcon: {
-    height: '100%',
     position: 'absolute',
+    display: 'none',
   },
+  [theme.breakpoints.up('sm')]: {
+    toolbar: {
+      paddingLeft: theme.spacing(2),
+    },
+    logoIconSm: {
+      display: 'none'
+    },
+    logoIcon: {
+      position: 'absolute',
+      display: 'inline-block',
+    },
+    logoButton: {
+      height: '48px',
+      width: '144px',
+    },
+  }
 }));
 
 const SearchAppBar = ({ history }) => {
@@ -46,6 +67,11 @@ const SearchAppBar = ({ history }) => {
               <img
                 className={classes.logoIcon}
                 src="/logo-white.svg"
+                alt="stash"
+              />
+              <img
+                className={classes.logoIconSm}
+                src="/logo-white-sm.svg"
                 alt="stash"
               />
             </Button>

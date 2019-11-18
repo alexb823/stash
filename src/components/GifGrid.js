@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
 import uuid from 'uuid/v4';
+
 import GifGridCard from './GifGridCard';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -65,6 +65,5 @@ const GifGrid = ({ gifData }) => {
   );
 };
 
-const mapStateToProps = ({ status, gifData }) => ({ status, gifData });
 
-export default connect(mapStateToProps)(GifGrid);
+export default GifGrid;

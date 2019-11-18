@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
+import { addedToFavorites } from '../reducers/favoriteReducer';
+
+import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -72,7 +75,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const GifGridCard = ({ gif, setSnackbarOpen, setSnackbarMessage }) => {
+const GifGridCard = ({
+  gif,
+  setSnackbarOpen,
+  setSnackbarMessage,
+  addedToFavorites,
+}) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -95,8 +103,9 @@ const GifGridCard = ({ gif, setSnackbarOpen, setSnackbarMessage }) => {
 
   const handleFavoriteClick = event => {
     event.stopPropagation();
-    // setSnackbarOpen(true);
-    // setSnackbarMessage(`Copied link to ${gif.title}`);
+    setSnackbarOpen(true);
+    setSnackbarMessage(`Added ${gif.title} to favorite`);
+    addedToFavorites(gif);
   };
 
   return (
@@ -154,4 +163,4 @@ const GifGridCard = ({ gif, setSnackbarOpen, setSnackbarMessage }) => {
   );
 };
 
-export default GifGridCard;
+export default connect(null, { addedToFavorites })(GifGridCard);

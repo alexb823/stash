@@ -75,8 +75,6 @@ export const fetchGifData = query => {
 
 export const fetchMoreGifData = (query, offset) => {
   return dispatch => {
-    // dispatch(gifSearchRequest());
-
     return axios
       .get('https://api.giphy.com/v1/gifs/search', {
         params: {

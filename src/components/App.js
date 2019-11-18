@@ -1,7 +1,9 @@
-import React, {Fragment} from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 import SearchResults from './SearchResults';
 import SearchAppBar from './SearchAppBar';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Favorite from './Favorite';
 
 
 
@@ -10,6 +12,7 @@ const App = (props) => {
     <Router>
       <Route component={SearchAppBar} />
       <Route exact path="/search/:query" component={SearchResults} />
+      <Route exact path="/favorite" component={Favorite} />
     </Router>
 
   );

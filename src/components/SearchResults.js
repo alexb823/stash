@@ -1,22 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
 // import InfiniteScroll from 'react-infinite-scroll-component';
 import InfiniteScroll from 'react-infinite-scroller';
-import { fetchMoreGifData } from '../reducers/gifReducer';
-import GifGrid from './GifGrid';
+
+import { makeStyles } from '@material-ui/core/styles';
 // import Fab from '@material-ui/core/Fab';
 // import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 // import ScrollTop from './ScrollTop';
+
+import { fetchMoreGifData } from '../reducers/gifReducer';
+import GifGrid from './GifGrid';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(2),
   },
-  grid: {},
 }));
 
-const SearchResults = ({ match, status, gifData, totalCount, fetchMoreGifData }) => {
+const SearchResults = ({ match, searchData, fetchMoreGifData }) => {
+  const {status, gifData, totalCount} = searchData;
   const classes = useStyles();
 
   const handleNext = () => {
@@ -38,13 +41,13 @@ const SearchResults = ({ match, status, gifData, totalCount, fetchMoreGifData })
         {status === 'fetching' ? (
           <div></div>
         ) : (
-          <GifGrid gifData={gifData} className={classes.grid} />
+          <GifGrid gifData={gifData} />
         )}
       </InfiniteScroll>
     </div>
   );
 };
 
-const mapStateToProps = ({ status, gifData, totalCount }) => ({ status, gifData, totalCount });
+const mapStateToProps = ({ searchData }) => ({ searchData });
 
 export default connect(mapStateToProps, { fetchMoreGifData })(SearchResults);
