@@ -1,38 +1,66 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import uuid from 'uuid/v4';
+import GifGridCard from './GifGridCard';
+
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
+import { Grid, Snackbar, IconButton } from '@material-ui/core';
+import { Close as CloseIcon } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    padding: theme.spacing(2),
   },
-  gridItem: {
-    width: '300px',
-  },
-  image: {
-    width: '100%',
+  snackbar: {
+    '& div': {
+      backgroundColor: theme.palette.primary.main,
+    },
   },
 }));
 
 const GifGrid = ({ gifData }) => {
+  const [open, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('true');
   const classes = useStyles();
+
+  const closeSnackbar = () => {
+    setSnackbarOpen(false);
+  };
+
+  const gifCards = gifData.map(gif => (
+    <GifGridCard
+      key={uuid()}
+      gif={gif}
+      setSnackbarOpen={setSnackbarOpen}
+      setSnackbarMessage={setSnackbarMessage}
+    />
+  ));
 
   return (
     <div className={classes.root}>
-      <Grid container  direction="column" spacing={1} justify="flex-start" alignItems="center">
-        {gifData.map(gif => (
-          <Grid
-            item
-            className={classes.gridItem}
-            key={gif.id}
-          >
-            <img className={classes.image} src={gif.images.downsized_large.url} alt={gif.title} />
-          </Grid>
-        ))}
+      <Grid container spacing={1} justify="center" alignItems="flex-start">
+        {gifCards}
       </Grid>
+
+      <Snackbar
+        className={classes.snackbar}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        open={open}
+        autoHideDuration={3000}
+        onClose={closeSnackbar}
+        message={<span id="message-id"> {snackbarMessage} </span>}
+        ContentProps={{ 'aria-describedby': 'message-id' }}
+        action={[
+          <IconButton
+            onClick={closeSnackbar}
+            color="inherit"
+            key="close"
+            aria-label="close"
+          >
+            <CloseIcon />
+          </IconButton>,
+        ]}
+      />
     </div>
   );
 };

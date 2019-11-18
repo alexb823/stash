@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     gridRowEnd: spans => `span ${spans}`,
     backgroundColor: () => boxColors[Math.floor(Math.random() * 6)],
-    marginBottom: '60px',
+    marginBottom: '40px',
   },
   image: {
     width: '100%',
@@ -22,14 +22,14 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ImageCard = props => {
-  const [spans, setSpans] = useState(8);
+  const [spans, setSpans] = useState(10);
   const imgRef = useRef(null);
 
   const classes = useStyles(spans);
 
   const calcAndSetSpans = () => {
     const height = imgRef.current.clientHeight;
-    const spans = Math.ceil(height / 30) + 1;
+    const spans = Math.ceil(height / 20) + 1;
     setSpans(spans);
   };
 
@@ -54,8 +54,8 @@ const ImageCard = props => {
         className={classes.image}
         // src={props.gif.images.downsized_large.url}
         // src={props.gif.images.fixed_width.url}
-        // src={props.gif.images.fixed_width_downsampled.url}
-        src={props.gif.images.original_still.url}
+        src={props.gif.images.fixed_width_downsampled.url}
+        // src={props.gif.images.original_still.url}
         alt={props.gif.title}
         onLoad={calcAndSetSpans}
       />
