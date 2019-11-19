@@ -1,22 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
 // import InfiniteScroll from 'react-infinite-scroll-component';
 import InfiniteScroll from 'react-infinite-scroller';
-import { fetchMoreGifData } from '../reducers/gifReducer';
-import GifGrid from './GifGrid';
+
+import { makeStyles } from '@material-ui/core/styles';
 // import Fab from '@material-ui/core/Fab';
 // import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 // import ScrollTop from './ScrollTop';
+
+import { fetchMoreGifData } from '../reducers/gifReducer';
+import GifGrid from './GifGrid';
+import Spinner from './Spinner';
+import Header from './Header';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(2),
   },
-  grid: {},
 }));
 
-const SearchResults = ({ match, status, gifData, fetchMoreGifData }) => {
+const SearchResults = ({ match, history, searchData, fetchMoreGifData }) => {
+  const {status, gifData, totalCount} = searchData;
   const classes = useStyles();
 
   const handleNext = () => {
@@ -25,26 +30,51 @@ const SearchResults = ({ match, status, gifData, fetchMoreGifData }) => {
 
   return (
     <div className={classes.root}>
+      <Header title={match.params.query} subTitle={totalCount} />
       <InfiniteScroll
+        threshold={0}
         pageStart={0}
+        initialLoad={false}
         loadMore={handleNext}
-        hasMore={gifData.length < 400}
+        hasMore={gifData.length < totalCount}
         loader={
           <div className="loader" key={0}>
-            Loading Gifs ...
+            <Spinner />
           </div>
         }
       >
         {status === 'fetching' ? (
-          <div></div>
+          <Spinner />
         ) : (
-          <GifGrid gifData={gifData} className={classes.grid} />
+          <GifGrid gifData={gifData} />
         )}
       </InfiniteScroll>
     </div>
   );
 };
 
-const mapStateToProps = ({ status, gifData }) => ({ status, gifData });
+const mapStateToProps = ({ searchData }) => ({ searchData });
 
 export default connect(mapStateToProps, { fetchMoreGifData })(SearchResults);
+
+
+
+//   return (
+//         <InfiniteScroll
+//         className={classes.root}
+        
+//         scrollThreshold={1}
+//         dataLength={gifData.length}
+//         next={handleNext}
+
+//         hasMore={gifData.length < totalCount}
+//         loader={<Spinner />}
+//       >
+//         {status === 'fetching' ? (
+//           <div></div>
+//         ) : (
+//           <GifGrid gifData={gifData} />
+//         )}
+//       </InfiniteScroll>
+//   );
+// };

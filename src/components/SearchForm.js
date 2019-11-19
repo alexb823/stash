@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import InputBase from '@material-ui/core/InputBase';
-import { fade, makeStyles } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search';
+
 import { fetchGifData } from '../reducers/gifReducer';
+
+import { fade, makeStyles } from '@material-ui/core/styles';
+import InputBase from '@material-ui/core/InputBase';
+import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles(theme => ({
   search: {
@@ -14,7 +16,6 @@ const useStyles = makeStyles(theme => ({
     '&:hover': {
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
-    marginLeft: '35px',
     width: '100%',
     [theme.breakpoints.up('sm')]: {
       marginLeft: 'auto',
@@ -38,9 +39,9 @@ const useStyles = makeStyles(theme => ({
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('sm')]: {
-      width: 120,
+      width: 170,
       '&:focus': {
-        width: 200,
+        width: 250,
       },
     },
   },
@@ -52,11 +53,10 @@ const SearchForm = ({ location, history, fetchGifData }) => {
 
   useEffect(() => {
     const searchText = location.pathname.split('/').slice(-1)[0];
-    if (searchText) {
-      setQuery(searchText);
+    if (searchText && location.pathname !== '/favorite') {
       fetchGifData(searchText);
     }
-  }, [location]);
+  }, []);
 
   const handleChange = ({ target: { value } }) => {
     setQuery(value);

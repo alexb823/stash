@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
 import uuid from 'uuid/v4';
+
 import GifGridCard from './GifGridCard';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -46,7 +46,7 @@ const GifGrid = ({ gifData }) => {
         className={classes.snackbar}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
         open={open}
-        autoHideDuration={3000}
+        autoHideDuration={1000}
         onClose={closeSnackbar}
         message={<span id="message-id"> {snackbarMessage} </span>}
         ContentProps={{ 'aria-describedby': 'message-id' }}
@@ -65,6 +65,5 @@ const GifGrid = ({ gifData }) => {
   );
 };
 
-const mapStateToProps = ({ status, gifData }) => ({ status, gifData });
 
-export default connect(mapStateToProps)(GifGrid);
+export default GifGrid;

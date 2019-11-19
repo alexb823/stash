@@ -1,18 +1,26 @@
-import React, {Fragment} from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { gotFavoritesFromLS } from '../reducers/favoriteReducer';
+
 import SearchResults from './SearchResults';
 import SearchAppBar from './SearchAppBar';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Favorite from './Favorite';
 
+const App = ({ gotFavoritesFromLS }) => {
+  useEffect(() => {
+    if (window.localStorage.getItem('favoriteGifs')) {
+      gotFavoritesFromLS(JSON.parse(window.localStorage.getItem('favoriteGifs')));
+    }
+  }, []);
 
-
-const App = (props) => {
   return (
     <Router>
       <Route component={SearchAppBar} />
       <Route exact path="/search/:query" component={SearchResults} />
+      <Route exact path="/favorite" component={Favorite} />
     </Router>
-
   );
 };
 
-export default App;
+export default connect(null, { gotFavoritesFromLS })(App);
