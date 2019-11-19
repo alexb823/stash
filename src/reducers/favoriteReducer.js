@@ -47,17 +47,17 @@ export const favoriteReducer = (state = initialState, action) => {
   }
 };
 
-//Thunks
-export const addFavorites = gif => {
-  return dispatch => {
-    dispatch(addedToFavorites(gif));
-    return Promise.resolve();
-  };
-};
+// //Thunks
+// export const addFavorites = gif => {
+//   return dispatch => {
+//     dispatch(addedToFavorites(gif));
+//     return Promise.resolve();
+//   };
+// };
 
-export const removeFavorites = id => {
-  return dispatch => {
-    dispatch(removedFromFavorites(id));
-    return Promise.resolve();
-  };
-};
+// export const removeFavorites = id => {
+//   return dispatch => {
+//     dispatch(removedFromFavorites(id));
+//     return Promise.resolve();
+//   };
+// };

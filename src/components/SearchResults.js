@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import InfiniteScroll from 'react-infinite-scroll-component';
-import InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from 'react-infinite-scroll-component';
+// import InfiniteScroll from 'react-infinite-scroller';
 
 import { makeStyles } from '@material-ui/core/styles';
 // import Fab from '@material-ui/core/Fab';
@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const SearchResults = ({ match, searchData, fetchMoreGifData }) => {
+const SearchResults = ({ match, history, searchData, fetchMoreGifData }) => {
   const {status, gifData, totalCount} = searchData;
   const classes = useStyles();
 
@@ -28,28 +28,48 @@ const SearchResults = ({ match, searchData, fetchMoreGifData }) => {
   };
 
   return (
-    <div className={classes.root}>
-      <InfiniteScroll
-        pageStart={0}
-        initialLoad={false}
-        loadMore={handleNext}
+        <InfiniteScroll
+        className={classes.root}
+        
+        scrollThreshold={1}
+        dataLength={gifData.length}
+        next={handleNext}
+
         hasMore={gifData.length < totalCount}
-        loader={
-          <div className="loader" key={0}>
-            <Spinner />
-          </div>
-        }
+        loader={<Spinner />}
       >
         {status === 'fetching' ? (
-          <Spinner />
+          <div></div>
         ) : (
           <GifGrid gifData={gifData} />
         )}
       </InfiniteScroll>
-    </div>
   );
 };
 
 const mapStateToProps = ({ searchData }) => ({ searchData });
 
 export default connect(mapStateToProps, { fetchMoreGifData })(SearchResults);
+
+// return (
+//     <div className={classes.root}>
+//       <InfiniteScroll
+//         pageStart={0}
+//         initialLoad={false}
+//         loadMore={handleNext}
+//         hasMore={gifData.length < totalCount}
+//         loader={
+//           <div className="loader" key={0}>
+//             <Spinner />
+//           </div>
+//         }
+//       >
+//         {status === 'fetching' ? (
+//           <Spinner />
+//         ) : (
+//           <GifGrid gifData={gifData} />
+//         )}
+//       </InfiniteScroll>
+//     </div>
+//   );
+// };

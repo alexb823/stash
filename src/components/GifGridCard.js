@@ -2,7 +2,7 @@ import React, { useState,  useEffect } from 'react';
 import { connect } from 'react-redux';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-import { addFavorites, removeFavorites } from '../reducers/favoriteReducer';
+import {  addedToFavorites, removedFromFavorites } from '../reducers/favoriteReducer';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -80,8 +80,8 @@ const GifGridCard = ({
   favoriteData,
   setSnackbarOpen,
   setSnackbarMessage,
-  addFavorites,
-  removeFavorites,
+  addedToFavorites,
+  removedFromFavorites,
 }) => {
   const isFavorite = favoriteData.favoriteIdHash[gif.id];
   const classes = useStyles();
@@ -91,7 +91,7 @@ const GifGridCard = ({
 
   useEffect(() => {
     saveFavoriteInLocalStorage(favoriteData)
-  }, [isFavorite])
+  }, [favoriteData])
 
   console.log('rerender')
   const handleCardClick = event => {
@@ -117,14 +117,14 @@ const GifGridCard = ({
     event.stopPropagation();
     setSnackbarOpen(true);
     setSnackbarMessage(`Added ${gif.title} to favorites`);
-    addFavorites(gif)
+    addedToFavorites(gif)
   };
 
   const handleUnfavoriteClick = event => {
     event.stopPropagation();
     setSnackbarOpen(true);
     setSnackbarMessage(`Removed ${gif.title} from favorites`);
-    removeFavorites(gif.id);
+    removedFromFavorites(gif.id);
   };
 
   return (
@@ -195,6 +195,7 @@ const GifGridCard = ({
 const mapStateToProps = ({ favoriteData }) => ({ favoriteData });
 
 export default connect(mapStateToProps, {
-  addFavorites,
-  removeFavorites,
+  addedToFavorites,
+  removedFromFavorites,
 })(GifGridCard);
+
