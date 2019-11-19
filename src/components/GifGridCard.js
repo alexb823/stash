@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import {  addedToFavorites, removedFromFavorites } from '../reducers/favoriteReducer';
+import boxColors from '../colors';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -15,14 +16,6 @@ import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutline
 import FavoriteOutlinedIcon from '@material-ui/icons/FavoriteOutlined';
 import LinkIcon from '@material-ui/icons/Link';
 
-const boxColors = [
-  '#6342a5',
-  '#3c138f',
-  '#2a0d64',
-  '#4be8d8',
-  '#1ee3cf',
-  '#159e90',
-];
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -90,10 +83,9 @@ const GifGridCard = ({
   const id = open ? 'simple-popover' : undefined;
 
   useEffect(() => {
-    saveFavoriteInLocalStorage(favoriteData)
+    window.localStorage.setItem('favoriteGifs', JSON.stringify(favoriteData));
   }, [favoriteData])
 
-  console.log('rerender')
   const handleCardClick = event => {
     event.stopPropagation();
     setAnchorEl(event.target);
@@ -107,10 +99,6 @@ const GifGridCard = ({
     event.stopPropagation();
     setSnackbarOpen(true);
     setSnackbarMessage(`Copied link to ${gif.title}`);
-  };
-
-  const saveFavoriteInLocalStorage = data => {
-    window.localStorage.setItem('favoriteGifs', JSON.stringify(data));
   };
 
   const handleFavoriteClick = event => {
