@@ -46,7 +46,7 @@ const GifGrid = ({ gifData }) => {
         className={classes.snackbar}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
         open={open}
-        autoHideDuration={2000}
+        autoHideDuration={1000}
         onClose={closeSnackbar}
         message={<span id="message-id"> {snackbarMessage} </span>}
         ContentProps={{ 'aria-describedby': 'message-id' }}

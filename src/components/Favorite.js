@@ -2,9 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
 
+import GifGrid from './GifGrid';
+import Spinner from './Spinner';
+
 import { makeStyles } from '@material-ui/core/styles';
 
-import GifGrid from './GifGrid';
 
 
 const useStyles = makeStyles(theme => ({
@@ -13,32 +15,37 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Favorite = ({ match, favoriteData }) => {
+const Favorite = ({ favoriteData }) => {
   const {favoriteGifs} = favoriteData;
   const classes = useStyles();
+  let gifData = favoriteGifs.slice(0, 30)
 
-  // const handleNext = () => {
-  //   fetchMoreGifData(match.params.query, gifData.length);
-  // };
+  const handleNext = () => {
+    if (gifData.length < favoriteGifs.length) {
+      gifData = favoriteGifs.slice(0, (gifData.length + 30))
+      return gifData
+    }
+  };
 
   return (
     <div className={classes.root}>
-      {/* <InfiniteScroll
+      <InfiniteScroll
         pageStart={0}
-        loadMore={handleNext}
-        hasMore={gifData.length < totalCount}
+        initialLoad={false}
+        loadMore={() => handleNext}
+        hasMore={gifData.length < favoriteGifs.length}
         loader={
           <div className="loader" key={0}>
-            Loading Gifs ...
+            <Spinner />
           </div>
         }
-      > */}
+      >
         {!favoriteGifs.length ? (
-          <div></div>
+          <div><Spinner /></div>
         ) : (
-          <GifGrid gifData={favoriteGifs} />
+          <GifGrid gifData={gifData} />
         )}
-      {/* </InfiniteScroll> */}
+      </InfiniteScroll>
     </div>
   );
 };

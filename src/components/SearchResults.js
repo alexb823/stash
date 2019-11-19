@@ -41,7 +41,7 @@ const SearchResults = ({ match, searchData, fetchMoreGifData }) => {
         }
       >
         {status === 'fetching' ? (
-          <div></div>
+          <Spinner />
         ) : (
           <GifGrid gifData={gifData} />
         )}
