@@ -1,7 +1,5 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { connect } from 'react-redux';
-import InfiniteScroll from 'react-infinite-scroller';
-// import InfiniteScroll from 'react-infinite-scroll-component';
 
 
 import GifGrid from './GifGrid';
@@ -11,7 +9,6 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Button from '@material-ui/core/Button';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import Icon from '@material-ui/core/Icon';
 
 
 
@@ -28,21 +25,11 @@ const useStyles = makeStyles(theme => ({
 const Favorite = ({ history, favoriteData }) => {
   const {favoriteGifs} = favoriteData;
   const classes = useStyles();
-  let gifData = favoriteGifs.slice(0, 30)
 
-  const handleNext = () => {
-    if (gifData.length < favoriteGifs.length) {
-      gifData = favoriteGifs.slice(0, (gifData.length + 30))
-      return gifData
-    }
-  };
-  
-  const handleGoBackClick = (e) => {
+  const handleGoBackClick = () => {
     history.goBack();
   }
   
-   console.log(history)
-
   return (
     <div className={classes.root}>
       <Button
@@ -54,24 +41,7 @@ const Favorite = ({ history, favoriteData }) => {
       >
         Go Back
       </Button>
-      
-      <InfiniteScroll
-        pageStart={0}
-        initialLoad={false}
-        loadMore={() => handleNext}
-        hasMore={gifData.length < favoriteGifs.length}
-        loader={
-          <div className="loader" key={0}>
-            <Spinner />
-          </div>
-        }
-      >
-        {!favoriteGifs.length ? (
-          <div><Spinner /></div>
-        ) : (
-          <GifGrid gifData={gifData} />
-        )}
-      </InfiniteScroll>
+      <GifGrid gifData={favoriteGifs} />
     </div>
   );
 };
@@ -79,3 +49,71 @@ const Favorite = ({ history, favoriteData }) => {
 const mapStateToProps = ({ favoriteData }) => ({ favoriteData });
 
 export default connect(mapStateToProps)(Favorite);
+
+
+
+// return (
+//     <div className={classes.root}>
+//       <Button
+//         variant="contained"
+//         color="secondary"
+//         className={classes.button}
+//         startIcon={<ArrowBackIosIcon />}
+//         onClick={handleGoBackClick}
+//       >
+//         Go Back
+//       </Button>
+      
+//       <InfiniteScroll
+//         pageStart={0}
+//         initialLoad={false}
+//         loadMore={() => handleNext}
+//         hasMore={gifData.length < favoriteGifs.length}
+//         loader={
+//           <div className="loader" key={0}>
+//             <Spinner />
+//           </div>
+//         }
+//       >
+//         {!favoriteGifs.length ? (
+//           <div><Spinner /></div>
+//         ) : (
+//           <GifGrid gifData={gifData} />
+//         )}
+//       </InfiniteScroll>
+//     </div>
+//   );
+
+
+
+
+
+  // return (
+    
+  //   <div id="scrollableDiv" className={classes.root}>
+  //     <Button
+  //       variant="contained"
+  //       color="secondary"
+  //       className={classes.button}
+  //       startIcon={<ArrowBackIosIcon />}
+  //       onClick={handleGoBackClick}
+  //     >
+  //       Go Back
+  //     </Button>
+      
+  //     <InfiniteScroll
+  //       scrollableTarget="window"
+  //       scrollThreshold={1}
+  //       dataLength={dataLength}
+  //       next={handleNext}
+  //       hasMore={dataLength < favoriteGifs.length}
+  //       loader={<Spinner />}
+  //     >
+  //       {!favoriteGifs.length ? (
+  //         <div></div>
+  //       ) : (
+  //         <GifGrid gifData={favoriteGifs} />
+  //       )}
+  //     </InfiniteScroll>
+  //   </div>
+  // );
