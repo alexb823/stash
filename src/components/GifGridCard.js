@@ -1,11 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState,  useEffect } from 'react';
 import { connect } from 'react-redux';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-import {
-  addedToFavorites,
-  removedFromFavorites,
-} from '../reducers/favoriteReducer';
+import { addFavorites, removeFavorites } from '../reducers/favoriteReducer';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -80,18 +77,23 @@ const useStyles = makeStyles(theme => ({
 
 const GifGridCard = ({
   gif,
-  favoriteIdHash,
+  favoriteData,
   setSnackbarOpen,
   setSnackbarMessage,
-  addedToFavorites,
-  removedFromFavorites,
+  addFavorites,
+  removeFavorites,
 }) => {
-  const isFavorite = favoriteIdHash[gif.id];
+  const isFavorite = favoriteData.favoriteIdHash[gif.id];
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
+  useEffect(() => {
+    saveFavoriteInLocalStorage(favoriteData)
+  }, [isFavorite])
+
+  console.log('rerender')
   const handleCardClick = event => {
     event.stopPropagation();
     setAnchorEl(event.target);
@@ -107,18 +109,22 @@ const GifGridCard = ({
     setSnackbarMessage(`Copied link to ${gif.title}`);
   };
 
+  const saveFavoriteInLocalStorage = data => {
+    window.localStorage.setItem('favoriteGifs', JSON.stringify(data));
+  };
+
   const handleFavoriteClick = event => {
     event.stopPropagation();
     setSnackbarOpen(true);
     setSnackbarMessage(`Added ${gif.title} to favorites`);
-    addedToFavorites(gif);
+    addFavorites(gif)
   };
 
   const handleUnfavoriteClick = event => {
     event.stopPropagation();
     setSnackbarOpen(true);
     setSnackbarMessage(`Removed ${gif.title} from favorites`);
-    removedFromFavorites(gif.id);
+    removeFavorites(gif.id);
   };
 
   return (
@@ -186,11 +192,9 @@ const GifGridCard = ({
   );
 };
 
-const mapStateToProps = ({ favoriteData: { favoriteIdHash } }) => ({
-  favoriteIdHash,
-});
+const mapStateToProps = ({ favoriteData }) => ({ favoriteData });
 
 export default connect(mapStateToProps, {
-  addedToFavorites,
-  removedFromFavorites,
+  addFavorites,
+  removeFavorites,
 })(GifGridCard);

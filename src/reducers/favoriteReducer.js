@@ -1,6 +1,7 @@
 //Action types
 const ADDED_TO_FAVORITES = 'ADDED_TO_FAVORITES';
 const REMOVED_FROM_FAVORITES = 'REMOVED_FROM_FAVORITES';
+const GOT_FAVORITES_FROM_LS = 'GOT_FAVORITES_FROM_LS';
 
 //Action creators
 export const addedToFavorites = gif => ({
@@ -11,6 +12,11 @@ export const addedToFavorites = gif => ({
 export const removedFromFavorites = id => ({
   type: REMOVED_FROM_FAVORITES,
   id,
+});
+
+export const gotFavoritesFromLS = favoriteData => ({
+  type: GOT_FAVORITES_FROM_LS,
+  favoriteData,
 });
 
 //Reducer
@@ -29,12 +35,29 @@ export const favoriteReducer = (state = initialState, action) => {
           gif => gif.id !== action.id
         ),
         favoriteIdHash: (() => {
-          const newIdHash = {...state.favoriteIdHash};
+          const newIdHash = { ...state.favoriteIdHash };
           delete newIdHash[action.id];
-          return newIdHash
-        })()
+          return newIdHash;
+        })(),
       };
+    case GOT_FAVORITES_FROM_LS:
+      return { ...action.favoriteData };
     default:
       return state;
   }
+};
+
+//Thunks
+export const addFavorites = gif => {
+  return dispatch => {
+    dispatch(addedToFavorites(gif));
+    return Promise.resolve();
+  };
+};
+
+export const removeFavorites = id => {
+  return dispatch => {
+    dispatch(removedFromFavorites(id));
+    return Promise.resolve();
+  };
 };

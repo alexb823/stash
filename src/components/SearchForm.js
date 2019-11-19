@@ -50,7 +50,6 @@ const useStyles = makeStyles(theme => ({
 const SearchForm = ({ location, history, fetchGifData }) => {
   const classes = useStyles();
   const [query, setQuery] = useState('');
-  console.log('THE LOCATION!!!!!!', location);
 
   useEffect(() => {
     const searchText = location.pathname.split('/').slice(-1)[0];

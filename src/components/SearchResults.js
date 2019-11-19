@@ -10,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { fetchMoreGifData } from '../reducers/gifReducer';
 import GifGrid from './GifGrid';
+import Spinner from './Spinner';
 
 
 const useStyles = makeStyles(theme => ({
@@ -35,12 +36,12 @@ const SearchResults = ({ match, searchData, fetchMoreGifData }) => {
         hasMore={gifData.length < totalCount}
         loader={
           <div className="loader" key={0}>
-            Loading Gifs ...
+            <Spinner />
           </div>
         }
       >
         {status === 'fetching' ? (
-          <div>MY LOADER</div>
+          <div></div>
         ) : (
           <GifGrid gifData={gifData} />
         )}
