@@ -30,14 +30,8 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
-    height: 100,
-    width: 150,
-  },
-  [theme.breakpoints.up('sm')]: {
-    media: {
-      height: 180,
-      width: 270,
-    },
+    height: 180,
+    width: 270,
   },
   actions: {
     display: 'flex',
@@ -46,6 +40,17 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
     opacity: 0,
+  },
+  [theme.breakpoints.down('xs')]: {
+    media: {
+      height: 100,
+      width: 150,
+    },
+    actions: {
+      backgroundColor: 'rgba(0, 0, 0, 0)',
+      opacity: 1,
+      transition: 'opacity 0.4s ease-in-out',
+    },
   },
   icon: {},
   popover: {

@@ -6,6 +6,7 @@ import { gotFavoritesFromLS } from '../reducers/favoriteReducer';
 import SearchResults from './SearchResults';
 import SearchAppBar from './SearchAppBar';
 import Favorite from './Favorite';
+import TrendingResults from './TrendingResults';
 
 const App = ({ gotFavoritesFromLS }) => {
   useEffect(() => {
@@ -17,6 +18,7 @@ const App = ({ gotFavoritesFromLS }) => {
   return (
     <Router>
       <Route component={SearchAppBar} />
+      <Route exact path="/" component={TrendingResults} />
       <Route exact path="/search/:query" component={SearchResults} />
       <Route exact path="/favorite" component={Favorite} />
     </Router>
