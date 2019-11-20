@@ -28,12 +28,13 @@ const useStyles = makeStyles(theme => ({
 
 const Header = ({ title, subTitle }) => {
   const classes = useStyles();
+  const pageTitle = title.toLowerCase();
 
   return (
     <Fragment>
       <div className={classes.root}>
         <Typography variant="h4" className={classes.title}>
-          {title}
+          {pageTitle}
         </Typography>
         <Typography variant="subtitle2" className={classes.subtitle}>
           {subTitle} GIFs

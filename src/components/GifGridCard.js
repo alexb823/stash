@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, memo } from 'react';
 import { connect } from 'react-redux';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
@@ -78,21 +78,16 @@ const useStyles = makeStyles(theme => ({
 
 const GifGridCard = ({
   gif,
-  favoriteData,
+  isFavorite,
   setSnackbarOpen,
   setSnackbarMessage,
   addedToFavorites,
   removedFromFavorites,
 }) => {
-  const isFavorite = favoriteData.favoriteIdHash[gif.id];
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
-
-  useEffect(() => {
-    window.localStorage.setItem('favoriteGifs', JSON.stringify(favoriteData));
-  }, [favoriteData]);
+  const popoverOpen = Boolean(anchorEl);
+  const id = popoverOpen ? 'simple-popover' : undefined;
 
   const handleCardClick = event => {
     event.stopPropagation();
@@ -122,6 +117,8 @@ const GifGridCard = ({
     setSnackbarMessage(`Removed ${gif.title} from favorites`);
     removedFromFavorites(gif.id);
   };
+  
+  console.log('rendered')
 
   return (
     <Grid item aria-label={gif.title}>
@@ -171,7 +168,7 @@ const GifGridCard = ({
       <Popover
         id={id}
         className={classes.popover}
-        open={open}
+        open={popoverOpen}
         anchorEl={anchorEl}
         onClose={handleClose}
         onClick={handleClose}
@@ -188,9 +185,7 @@ const GifGridCard = ({
   );
 };
 
-const mapStateToProps = ({ favoriteData }) => ({ favoriteData });
-
-export default connect(mapStateToProps, {
+export default memo(connect(null, {
   addedToFavorites,
   removedFromFavorites,
-})(GifGridCard);
+})(GifGridCard));

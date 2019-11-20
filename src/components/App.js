@@ -8,7 +8,7 @@ import SearchAppBar from './SearchAppBar';
 import Favorite from './Favorite';
 import Trending from './Trending';
 
-const App = ({ gotFavoritesFromLS }) => {
+const App = ({ favoriteData, gotFavoritesFromLS }) => {
   useEffect(() => {
     if (window.localStorage.getItem('favoriteGifs')) {
       gotFavoritesFromLS(
@@ -16,6 +16,10 @@ const App = ({ gotFavoritesFromLS }) => {
       );
     }
   }, []);
+  
+  useEffect(() => {
+    window.localStorage.setItem('favoriteGifs', JSON.stringify(favoriteData));
+  }, [favoriteData]);
 
   return (
     <Router>
@@ -27,4 +31,6 @@ const App = ({ gotFavoritesFromLS }) => {
   );
 };
 
-export default connect(null, { gotFavoritesFromLS })(App);
+const mapStateToProps = ({ favoriteData }) => ({ favoriteData });
+
+export default connect(mapStateToProps, { gotFavoritesFromLS })(App);
