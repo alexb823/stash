@@ -1,14 +1,16 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
 
-import { fetcTrendinghGifData, fetchMoreTrendingGifData } from '../reducers/gifReducer';
+import {
+  fetcTrendinghGifData,
+  fetchMoreTrendingGifData,
+} from '../reducers/gifReducer';
 import GifGrid from './GifGrid';
 import Spinner from './Spinner';
 import Header from './Header';
 
 import { makeStyles } from '@material-ui/core/styles';
-
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -16,13 +18,17 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const TrendingResults = ({ searchData, fetcTrendinghGifData, fetchMoreTrendingGifData }) => {
-  const {status, gifData, totalCount} = searchData;
+const Trending = ({
+  searchData,
+  fetcTrendinghGifData,
+  fetchMoreTrendingGifData,
+}) => {
+  const { status, gifData, totalCount } = searchData;
   const classes = useStyles();
-  
-  useEffect(()=> {
+
+  useEffect(() => {
     fetcTrendinghGifData();
-  }, [])
+  }, []);
 
   const handleNext = () => {
     fetchMoreTrendingGifData(gifData.length);
@@ -43,11 +49,7 @@ const TrendingResults = ({ searchData, fetcTrendinghGifData, fetchMoreTrendingGi
           </div>
         }
       >
-        {status === 'fetching' ? (
-          <Spinner />
-        ) : (
-          <GifGrid gifData={gifData} />
-        )}
+        {status === 'fetching' ? <div></div> : <GifGrid gifData={gifData} />}
       </InfiniteScroll>
     </div>
   );
@@ -55,4 +57,7 @@ const TrendingResults = ({ searchData, fetcTrendinghGifData, fetchMoreTrendingGi
 
 const mapStateToProps = ({ searchData }) => ({ searchData });
 
-export default connect(mapStateToProps, { fetcTrendinghGifData, fetchMoreTrendingGifData })(TrendingResults);
+export default connect(mapStateToProps, {
+  fetcTrendinghGifData,
+  fetchMoreTrendingGifData,
+})(Trending);

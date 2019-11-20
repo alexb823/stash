@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { fetchGifData } from '../reducers/gifReducer';
-
 import { fade, makeStyles } from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
+
+import { fetchGifData } from '../reducers/gifReducer';
 
 const useStyles = makeStyles(theme => ({
   search: {

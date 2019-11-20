@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import uuid from 'uuid/v4';
 
-import GifGridCard from './GifGridCard';
-
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Snackbar, IconButton } from '@material-ui/core';
 import { Close as CloseIcon } from '@material-ui/icons';
+
+import GifGridCard from './GifGridCard';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -64,6 +64,5 @@ const GifGrid = ({ gifData }) => {
     </div>
   );
 };
-
 
 export default GifGrid;
