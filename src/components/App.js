@@ -6,17 +6,21 @@ import { gotFavoritesFromLS } from '../reducers/favoriteReducer';
 import SearchResults from './SearchResults';
 import SearchAppBar from './SearchAppBar';
 import Favorite from './Favorite';
+import Trending from './Trending';
 
 const App = ({ gotFavoritesFromLS }) => {
   useEffect(() => {
     if (window.localStorage.getItem('favoriteGifs')) {
-      gotFavoritesFromLS(JSON.parse(window.localStorage.getItem('favoriteGifs')));
+      gotFavoritesFromLS(
+        JSON.parse(window.localStorage.getItem('favoriteGifs'))
+      );
     }
   }, []);
 
   return (
     <Router>
       <Route component={SearchAppBar} />
+      <Route exact path="/" component={Trending} />
       <Route exact path="/search/:query" component={SearchResults} />
       <Route exact path="/favorite" component={Favorite} />
     </Router>

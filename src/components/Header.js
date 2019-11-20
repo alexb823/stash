@@ -1,8 +1,7 @@
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -18,9 +17,12 @@ const useStyles = makeStyles(theme => ({
     textTransform: 'capitalize',
     marginRight: theme.spacing(1),
   },
+  subtitle: {
+    lineHeight: 1.8,
+  },
   hr: {
-  border: '2px solid #1ee3cf',
-  margin: theme.spacing(1, 0, 5, 0),
+    border: '2px solid #1ee3cf',
+    margin: theme.spacing(1, 0, 5, 0),
   },
 }));
 
@@ -30,16 +32,16 @@ const Header = ({ title, subTitle }) => {
   return (
     <Fragment>
       <div className={classes.root}>
-        <Typography variant="h4"  className={classes.title}>
+        <Typography variant="h4" className={classes.title}>
           {title}
         </Typography>
-        <Typography variant="subtitle1" >
+        <Typography variant="subtitle2" className={classes.subtitle}>
           {subTitle} GIFs
         </Typography>
       </div>
       <hr className={classes.hr} />
     </Fragment>
-  )
+  );
 };
 
 export default Header;

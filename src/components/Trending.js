@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
 
-import { makeStyles } from '@material-ui/core/styles';
-
-import { fetchMoreGifData } from '../reducers/gifReducer';
+import {
+  fetcTrendinghGifData,
+  fetchMoreTrendingGifData,
+} from '../reducers/gifReducer';
 import GifGrid from './GifGrid';
 import Spinner from './Spinner';
 import Header from './Header';
+
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -15,17 +18,25 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const SearchResults = ({ match, searchData, fetchMoreGifData }) => {
+const Trending = ({
+  searchData,
+  fetcTrendinghGifData,
+  fetchMoreTrendingGifData,
+}) => {
   const { status, gifData, totalCount } = searchData;
   const classes = useStyles();
 
+  useEffect(() => {
+    fetcTrendinghGifData();
+  }, []);
+
   const handleNext = () => {
-    fetchMoreGifData(match.params.query, gifData.length);
+    fetchMoreTrendingGifData(gifData.length);
   };
 
   return (
     <div className={classes.root}>
-      <Header title={match.params.query} subTitle={totalCount} />
+      <Header title={'Trending'} subTitle={totalCount} />
       <InfiniteScroll
         threshold={0}
         pageStart={0}
@@ -46,4 +57,7 @@ const SearchResults = ({ match, searchData, fetchMoreGifData }) => {
 
 const mapStateToProps = ({ searchData }) => ({ searchData });
 
-export default connect(mapStateToProps, { fetchMoreGifData })(SearchResults);
+export default connect(mapStateToProps, {
+  fetcTrendinghGifData,
+  fetchMoreTrendingGifData,
+})(Trending);

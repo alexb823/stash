@@ -1,9 +1,6 @@
-import React, { useState,  useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-
-import {  addedToFavorites, removedFromFavorites } from '../reducers/favoriteReducer';
-import boxColors from '../colors';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -16,6 +13,12 @@ import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutline
 import FavoriteOutlinedIcon from '@material-ui/icons/FavoriteOutlined';
 import LinkIcon from '@material-ui/icons/Link';
 
+import {
+  addedToFavorites,
+  removedFromFavorites,
+} from '../reducers/favoriteReducer';
+
+import boxColors from '../colors';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -30,14 +33,8 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
-    height: 100,
-    width: 150,
-  },
-  [theme.breakpoints.up('sm')]: {
-    media: {
-      height: 180,
-      width: 270,
-    },
+    height: 180,
+    width: 270,
   },
   actions: {
     display: 'flex',
@@ -46,6 +43,17 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
     opacity: 0,
+  },
+  [theme.breakpoints.down('xs')]: {
+    media: {
+      height: 100,
+      width: 150,
+    },
+    actions: {
+      backgroundColor: 'rgba(0, 0, 0, 0)',
+      opacity: 1,
+      transition: 'opacity 0.4s ease-in-out',
+    },
   },
   icon: {},
   popover: {
@@ -84,7 +92,7 @@ const GifGridCard = ({
 
   useEffect(() => {
     window.localStorage.setItem('favoriteGifs', JSON.stringify(favoriteData));
-  }, [favoriteData])
+  }, [favoriteData]);
 
   const handleCardClick = event => {
     event.stopPropagation();
@@ -105,7 +113,7 @@ const GifGridCard = ({
     event.stopPropagation();
     setSnackbarOpen(true);
     setSnackbarMessage(`Added ${gif.title} to favorites`);
-    addedToFavorites(gif)
+    addedToFavorites(gif);
   };
 
   const handleUnfavoriteClick = event => {
@@ -186,4 +194,3 @@ export default connect(mapStateToProps, {
   addedToFavorites,
   removedFromFavorites,
 })(GifGridCard);
-

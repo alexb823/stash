@@ -90,3 +90,38 @@ export const fetchMoreGifData = (query, offset) => {
       .catch(() => dispatch(gifSearchFail()));
   };
 };
+
+export const fetcTrendinghGifData = () => {
+  return dispatch => {
+    dispatch(gifSearchRequest());
+
+    return axios
+      .get('https://api.giphy.com/v1/gifs/trending', {
+        params: {
+          api_key: process.env.REACT_APP_GIPHY_API_KEY,
+          limit: 30,
+        },
+      })
+      .then(({ data }) =>
+        dispatch(gifSearchSuccess(data.data, data.pagination.total_count))
+      )
+      .catch(() => dispatch(gifSearchFail()));
+  };
+};
+
+export const fetchMoreTrendingGifData = (offset) => {
+  return dispatch => {
+    return axios
+      .get('https://api.giphy.com/v1/gifs/trending', {
+        params: {
+          api_key: process.env.REACT_APP_GIPHY_API_KEY,
+          offset,
+          limit: 30,
+        },
+      })
+      .then(({ data }) =>
+        dispatch(gifFetchedMore(data.data, data.pagination.total_count))
+      )
+      .catch(() => dispatch(gifSearchFail()));
+  };
+};
