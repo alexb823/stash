@@ -60,6 +60,8 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: 'rgba(0, 0, 0, 0.9)',
     '& > div': {
       backgroundColor: 'rgba(0, 0, 0, 0)',
+      maxWidth: '100%',
+      position: 'static',
     },
   },
   imgContainer: {
@@ -67,12 +69,11 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100vw',
-    height: '90vh',
-    marginLeft: 'auto',
-    marginRight: '20vw',
+    height: 'calc(100vh - 64px)',
   },
   popoverImg: {
     borderRadius: '4px',
+    maxWidth: 'calc(100vw - 32px)',
   },
 }));
 
