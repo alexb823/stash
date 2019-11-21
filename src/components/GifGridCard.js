@@ -175,6 +175,14 @@ const GifGridCard = ({
         anchorEl={anchorEl}
         onClose={handleClose}
         onClick={handleClose}
+        anchorOrigin={{
+          vertical: 'center',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'center',
+          horizontal: 'center',
+        }}
       >
         <div className={classes.imgContainer}>
           <img
