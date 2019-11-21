@@ -31,7 +31,7 @@ const Header = ({ title, subTitle }) => {
 
   return (
     <Fragment>
-      <div className={classes.root}>
+      <div id="back-to-top-anchor" className={classes.root}>
         <Typography variant="h4" className={classes.title}>
           {title}
         </Typography>
