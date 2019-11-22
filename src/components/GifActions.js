@@ -46,10 +46,10 @@ const GifActions = ({
   addedToFavorites,
   removedFromFavorites,
 }) => {
+  const classes = useStyles();
   const [open, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('true');
   const isFavorite = favoriteData.favoriteIdHash[gif.id];
-  const classes = useStyles();
   
   useEffect(() => {
     window.localStorage.setItem('favoriteGifs', JSON.stringify(favoriteData));
@@ -59,7 +59,7 @@ const GifActions = ({
     setSnackbarOpen(false);
   };
  
-    const handleLinkClick = event => {
+  const handleLinkClick = event => {
     event.stopPropagation();
     setSnackbarOpen(true);
     setSnackbarMessage(`Copied link to ${gif.title}`);
@@ -116,26 +116,26 @@ const GifActions = ({
         </Tooltip>
       )}
       
-    <Snackbar
-    className={classes.snackbar}
-    anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-    open={open}
-    autoHideDuration={1300}
-    onClose={closeSnackbar}
-    message={<span id="message-id"> {snackbarMessage} </span>}
-    ContentProps={{ 'aria-describedby': 'message-id' }}
-    action={[
-      <IconButton
-        onClick={closeSnackbar}
-        color="inherit"
-        key="close"
-        aria-label="close"
-      >
-        <CloseIcon />
-      </IconButton>,
-    ]}
-  />
-</div>
+      <Snackbar
+        className={classes.snackbar}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        open={open}
+        autoHideDuration={1300}
+        onClose={closeSnackbar}
+        message={<span id="message-id"> {snackbarMessage} </span>}
+        ContentProps={{ 'aria-describedby': 'message-id' }}
+        action={[
+          <IconButton
+            onClick={closeSnackbar}
+            color="inherit"
+            key="close"
+            aria-label="close"
+          >
+          <CloseIcon />
+          </IconButton>
+        ]}
+      />
+  </div>
   );
 };
 

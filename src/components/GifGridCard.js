@@ -42,11 +42,14 @@ const useStyles = makeStyles(theme => ({
     },
   },
   imgContainer: {
-    // display: 'flex',
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    // width: '100%',
-    // height: '100%',
+    '&:hover div': {
+      opacity: 1,
+      transition: 'opacity 0.4s ease-in-out',
+    },
+  },
+  popoverActions: {
+    position: 'relative',
+    marginTop: '-53px',
   },
   popoverImg: {
     borderRadius: '4px',
@@ -99,7 +102,9 @@ const GifGridCard = ({gif}) => {
             alt={gif.title}
             className={classes.popoverImg}
           />
-          <GifActions gif={gif} />
+          <div className={classes.popoverActions}>
+            <GifActions gif={gif} />
+          </div>
         </div>
       </Popover>
     </Grid>
