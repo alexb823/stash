@@ -57,7 +57,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const GifGridCard = ({gif}) => {
+const GifGridCard = ({ gif }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -98,9 +98,9 @@ const GifGridCard = ({gif}) => {
       >
         <div className={classes.imgContainer}>
           <img
+            className={classes.popoverImg}
             src={gif.images.original.url}
             alt={gif.title}
-            className={classes.popoverImg}
           />
           <div className={classes.popoverActions}>
             <GifActions gif={gif} />

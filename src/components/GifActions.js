@@ -16,7 +16,6 @@ import {
   removedFromFavorites,
 } from '../reducers/favoriteReducer';
 
-
 const useStyles = makeStyles(theme => ({
   actions: {
     display: 'flex',
@@ -50,15 +49,15 @@ const GifActions = ({
   const [open, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('true');
   const isFavorite = favoriteData.favoriteIdHash[gif.id];
-  
+
   useEffect(() => {
     window.localStorage.setItem('favoriteGifs', JSON.stringify(favoriteData));
   }, [favoriteData]);
-  
+
   const closeSnackbar = () => {
     setSnackbarOpen(false);
   };
- 
+
   const handleLinkClick = event => {
     event.stopPropagation();
     setSnackbarOpen(true);
@@ -115,7 +114,7 @@ const GifActions = ({
           </IconButton>
         </Tooltip>
       )}
-      
+
       <Snackbar
         className={classes.snackbar}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
@@ -131,15 +130,17 @@ const GifActions = ({
             key="close"
             aria-label="close"
           >
-          <CloseIcon />
-          </IconButton>
+            <CloseIcon />
+          </IconButton>,
         ]}
       />
-  </div>
+    </div>
   );
 };
 
 const mapStateToProps = ({ favoriteData }) => ({ favoriteData });
 
-export default connect(mapStateToProps, {addedToFavorites,
-  removedFromFavorites})(GifActions);
+export default connect(mapStateToProps, {
+  addedToFavorites,
+  removedFromFavorites,
+})(GifActions);

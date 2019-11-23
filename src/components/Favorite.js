@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Favorite = ({ history, favoriteData: {favoriteGifs} }) => {
+const Favorite = ({ history, favoriteData: { favoriteGifs } }) => {
   const classes = useStyles();
 
   const handleGoBackClick = () => {

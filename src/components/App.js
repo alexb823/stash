@@ -13,7 +13,6 @@ import Trending from './Trending';
 import ScrollTop from './ScrollTop';
 
 const App = ({ gotFavoritesFromLS, children }) => {
-
   useEffect(() => {
     if (window.localStorage.getItem('favoriteGifs')) {
       gotFavoritesFromLS(
@@ -30,7 +29,7 @@ const App = ({ gotFavoritesFromLS, children }) => {
         <Route exact path="/search/:query" component={SearchResults} />
         <Route exact path="/favorite" component={Favorite} />
       </Router>
-      
+
       <ScrollTop children={children}>
         <Fab color="secondary" size="small" aria-label="scroll back to top">
           <KeyboardArrowUpIcon />

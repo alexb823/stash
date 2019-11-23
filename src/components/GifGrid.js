@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import uuid from 'uuid/v4';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,9 +15,7 @@ const useStyles = makeStyles(theme => ({
 const GifGrid = ({ gifData }) => {
   const classes = useStyles();
 
-  const gifCards = gifData.map(gif => (
-    <GifGridCard key={uuid()} gif={gif} />
-  ));
+  const gifCards = gifData.map(gif => <GifGridCard key={uuid()} gif={gif} />);
 
   return (
     <div className={classes.root}>

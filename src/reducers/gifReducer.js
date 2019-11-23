@@ -91,7 +91,7 @@ export const fetchMoreGifData = (query, offset) => {
   };
 };
 
-export const fetcTrendinghGifData = () => {
+export const fetchTrendingGifData = () => {
   return dispatch => {
     dispatch(gifSearchRequest());
 

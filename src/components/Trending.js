@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import {
-  fetcTrendinghGifData,
+  fetchTrendingGifData,
   fetchMoreTrendingGifData,
 } from '../reducers/gifReducer';
 import GifGrid from './GifGrid';
@@ -20,14 +20,14 @@ const useStyles = makeStyles(theme => ({
 
 const Trending = ({
   searchData,
-  fetcTrendinghGifData,
+  fetchTrendingGifData,
   fetchMoreTrendingGifData,
 }) => {
   const { status, gifData, totalCount } = searchData;
   const classes = useStyles();
 
   useEffect(() => {
-    fetcTrendinghGifData();
+    fetchTrendingGifData();
   }, []);
 
   const handleNext = () => {
@@ -58,6 +58,6 @@ const Trending = ({
 const mapStateToProps = ({ searchData }) => ({ searchData });
 
 export default connect(mapStateToProps, {
-  fetcTrendinghGifData,
+  fetchTrendingGifData,
   fetchMoreTrendingGifData,
 })(Trending);
